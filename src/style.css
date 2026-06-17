@@ -1,0 +1,65 @@
+html,
+body {
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  height: 100%;
+}
+
+.container {
+  width: 100%;
+  height: 100%;
+}
+
+canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+#score {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  color: white;
+  font-size: 24px;
+  font-family: Arial, sans-serif;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+  z-index: 10;
+  pointer-events: none;
+}
+
+.win-screen {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.7);
+  z-index: 20;
+}
+
+.win-box {
+  background: white;
+  padding: 40px;
+  border-radius: 20px;
+  text-align: center;
+  font-family: Arial, sans-serif;
+}
+
+.win-box h1 {
+  margin: 0 0 10px;
+}
+
+.win-box p {
+  margin: 0 0 20px;
+}
+
+#restartBtn {
+  padding: 10px 30px;
+  font-size: 20px;
+  cursor: pointer;
+}

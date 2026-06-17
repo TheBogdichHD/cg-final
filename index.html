@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <link rel="stylesheet" href="/src/style.css" />
+  <link rel="icon" href="/sssdfg.jpg" />
+  <title>WebGL</title>
+</head>
+
+<body>
+  <div class="container">
+    <canvas id="canvas"></canvas>
+  </div>
+
+  <div id="score">Сфер: 0 / 0</div>
+
+  <div id="winScreen" class="win-screen">
+    <div class="win-box">
+      <h1>Победа!</h1>
+      <p>Вы собрали все сферы!</p>
+      <button id="restartBtn">Играть снова</button>
+    </div>
+  </div>
+
+  <script type="module" src="/src/index.js"></script>
+  <script src="/src/utils/m4.js"></script>
+  <script src="/src/utils/webgl-utils.js"></script>
+</body>
+
+</html>
