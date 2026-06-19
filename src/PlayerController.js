@@ -3,10 +3,13 @@ export class PlayerController {
         this.player = playerObject;
         this.input = inputManager;
         this.speed = 10;
-        this.jumpForce = 10;
+        this.jumpForce = 8;
         this.currentAngle = 0;
         this.targetAngle = 0;
         this.turnSpeed = 15;
+
+        this.coyoteTime = 0.15;
+        this.coyoteTimer = 0;
     }
 
     update(deltaTime, camera) {
@@ -30,7 +33,6 @@ export class PlayerController {
 
         if (this.input.isKeyDown('KeyW') || this.input.isKeyDown('ArrowUp')) moveZ += 1;
         if (this.input.isKeyDown('KeyS') || this.input.isKeyDown('ArrowDown')) moveZ -= 1;
-
         if (this.input.isKeyDown('KeyA') || this.input.isKeyDown('ArrowLeft')) moveX += 1;
         if (this.input.isKeyDown('KeyD') || this.input.isKeyDown('ArrowRight')) moveX -= 1;
 
@@ -43,13 +45,19 @@ export class PlayerController {
             this.targetAngle = Math.atan2(dirX, dirZ);
         }
 
-        if (this.input.isKeyDown('Space') && this.player.grounded) {
+        if (this.player.grounded) {
+            this.coyoteTimer = this.coyoteTime;
+        } else {
+            this.coyoteTimer -= deltaTime;
+        }
+
+        if (this.input.isKeyDown('Space') && (this.player.grounded || this.coyoteTimer > 0)) {
             this.player.velocity[1] = this.jumpForce;
             this.player.grounded = false;
+            this.coyoteTimer = 0;
         }
 
         let angleDiff = this.targetAngle - this.currentAngle;
-
         while (angleDiff > Math.PI) angleDiff -= Math.PI * 2;
         while (angleDiff < -Math.PI) angleDiff += Math.PI * 2;
 

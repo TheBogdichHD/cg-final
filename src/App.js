@@ -3,7 +3,6 @@ import { createMeshFromOBJ, bindMeshAttributes } from './Mesh.js';
 import { parseOBJ, parseMTL } from './OBJLoader.js';
 import { Camera } from './Camera.js';
 import { OrbitController } from './OrbitController.js';
-import { Light } from './Light.js';
 import { createContourProgram, renderContourPass } from './ContourPass.js';
 import { loadTexture } from './TextureLoader.js';
 import { InputManager } from './InputManager.js';
@@ -15,6 +14,11 @@ import fsSource from './shaders/cel.frag?raw';
 
 const m4 = window.m4;
 const webglUtils = window.webglUtils;
+
+export const Light = {
+    direction: m4.normalize([1, 2, 3]),
+    ambient: [0.1, 0.1, 0.08],
+};
 
 function boxIntersect(a, b) {
     return (a.min[0] <= b.max[0] && a.max[0] >= b.min[0]) &&
@@ -173,19 +177,19 @@ export class App {
             this.playerController = new PlayerController(this.playerObject, this.inputManager);
         }
 
-        const freddyMeshes = await this.loadModel('freddy', 'models/');
-        if (freddyMeshes.length > 0) {
-            this.sceneObjects.push({
-                meshes: freddyMeshes,
-                position: [0, 0, 5],
-                scale: [5, 5, 5],
-                rotation: [0, 0, 0],
-                drawContour: true,
-                isStatic: true,
-                doubleSided: false,
-                contourWidth: 0.006,
-            });
-        }
+        // const freddyMeshes = await this.loadModel('freddy', 'models/');
+        // if (freddyMeshes.length > 0) {
+        //     this.sceneObjects.push({
+        //         meshes: freddyMeshes,
+        //         position: [0, 0, -15],
+        //         scale: [5, 5, 5],
+        //         rotation: [0, 0, 0],
+        //         drawContour: true,
+        //         isStatic: true,
+        //         doubleSided: false,
+        //         contourWidth: 0.006,
+        //     });
+        // }
     }
 
     updateScore() {
@@ -337,6 +341,7 @@ export class App {
             gl.stencilFunc(gl.NOTEQUAL, 1, 0xFF);
             gl.stencilOp(gl.KEEP, gl.KEEP, gl.KEEP);
             gl.stencilMask(0x00);
+
             for (const obj of contourObjects) {
                 const meshes = obj.meshes || [obj.mesh];
                 let worldMatrix = m4.identity();
@@ -348,6 +353,7 @@ export class App {
                     obj.contourColor || [0, 0, 0]
                 );
             }
+
             gl.disable(gl.STENCIL_TEST);
             gl.stencilMask(0xFF);
             gl.depthFunc(gl.LESS);

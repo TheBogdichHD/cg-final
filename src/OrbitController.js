@@ -3,8 +3,8 @@ export class OrbitController {
         this.canvas = canvas;
         this.camera = camera;
         this.isPointerLocked = false;
-        this.sensitivity = 0.01;
-        this.zoomSpeed = 0.1;
+        this.sensitivity = 0.002;
+        this.zoomSpeed = 0.2;
 
         this.invertX = true;
         this.invertY = true;
